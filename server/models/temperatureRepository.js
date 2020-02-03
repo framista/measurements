@@ -12,7 +12,7 @@ class TemperatureRepository {
             temp2 REAL,
             temp3 REAL,
             temp4 REAL,
-            date DATE
+            date TEXT
         )`
         return this.dao.run(sql)
     }
@@ -24,8 +24,8 @@ class TemperatureRepository {
             [temp1, temp2, temp3, temp4, date]
         )
     }
-    
-    update(measurement){
+
+    update(measurement) {
         const { id, temp1, temp2, temp3, temp4, date } = measurement
         return this.dao.run(
             `UPDATE temperatures
@@ -41,7 +41,7 @@ class TemperatureRepository {
         )
     }
 
-    delete(id){
+    delete(id) {
         return this.dao.run(
             `DELETE FROM temperatures WHERE id = ?`,
             [id]
@@ -55,8 +55,10 @@ class TemperatureRepository {
         )
     }
 
-    getAll(){
-        return this.dao.all(`SELECT * FROM temperatures`)
+    getAllByDate(date) {
+        return this.dao.all(`SELECT * FROM temperatures WHERE date LIKE ?`,
+            [date + "%"]
+        )
     }
 
 }

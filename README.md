@@ -5,7 +5,7 @@ Application to saving data from measurement of 4 temperatures in database and sh
 
 ## Technologies
 * NodeJS
-  * sqlite3
+  * sqlite3 (dao)
   * express
 * Javascript
 

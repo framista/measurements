@@ -13,6 +13,12 @@ router.get('/:id', async (req, res) => {
     res.send(measurement);
 })
 
+router.get('/', async (req, res) => {
+    const date = req.body.date;
+    const measurements = await temperatureRepo.getAllByDate(date);    
+    res.send(measurements);
+})
+
 router.post('/', async (req, res) => {
     const temp1 = req.body.temp1;
     const temp2 = req.body.temp2;
