@@ -14,7 +14,7 @@ router.get('/:id', async (req, res) => {
 })
 
 router.get('/', async (req, res) => {
-    const date = req.body.date;
+    const date = req.query.date;
     const measurements = await temperatureRepo.getAllByDate(date);    
     res.send(measurements);
 })
