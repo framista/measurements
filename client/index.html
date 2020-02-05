@@ -4,23 +4,49 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
-    <meta name="description" content="">
+    <title>Measurement</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="node_modules/chart.js/dist/Chart.min.css">
-
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-    <form>
-        <label>Day</label>
-        <input type="date" id="date">
-    </form>
+    <div class="container">
 
-    <div class="chart-container" style="position: relative; height:40vh; width:80vw">
-        <canvas id="myChart" ></canvas>
+        <div class="generatePDF">
+            GENERATE PDF
+        </div>
+
+        <div class="generateCSV">
+            GENERATE CSV
+        </div>
+
+        <div class="chartBox">
+            <form>
+                <input type="date" id="date">
+            </form>
+            <div class="chart-container" >
+                <!-- style="position: relative; height:40vh; width:80vw" -->
+                <canvas id="chart"></canvas>
+            </div>
+        </div>
+
+        <div class="createMeasurement">
+            Add measurement
+            <form>
+
+            </form>
+        </div>
+
+        <div class="updateMeasurement">
+            Add measurement
+            <form>
+
+            </form>
+        </div>
+
     </div>
 
     <script src="dist/js/bundle.min.js" async defer></script>

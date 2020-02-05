@@ -1,28 +1,23 @@
 import api from '../api'
+import {todayDate} from './dateGenerator'
+import {dataChartGenerator} from './chartGenerator'
 
 const dateIpt = document.getElementById("date")
 dateIpt.value = todayDate();
 
 const Chart = require('chart.js');
-const ctx = document.getElementById('myChart');
+const ctx = document.getElementById('chart');
 
 api.getTemperatures("2020-01-01").then(result => {
 
     const measurements = result.data
-    const dataChart = measurements.map(measurement => {
-        const { temp1, temp2, temp3, temp4, date } = measurement;
-        let meanTemperature = (temp1 + temp2 + temp3 + temp4) / 4;
-        return {
-            x: new Date(date).toUTCString(),
-            y: meanTemperature
-        }
-    })
+    const dataChart = dataChartGenerator(measurements)
+  
     console.log(dataChart)
-    const myChart = new Chart(ctx, {
+    const chart = new Chart(ctx, {
         type: 'line',
         data: {
             datasets: [{
-                label: 'Temperatures',
                 backgroundColor: 'rgb(255, 255, 255, 0.1)',
                 borderColor: 'rgb(255, 99, 132)',
                 data: dataChart
@@ -38,20 +33,25 @@ api.getTemperatures("2020-01-01").then(result => {
                         }
                     }
                 }]
+            },
+            tooltips: {
+                callbacks: {
+                    label: tooltipItem => {
+                        let label = `Temp1 ${measurements[tooltipItem.index].temp1}  Temp2 ${measurements[tooltipItem.index].temp2}  Temp3 ${measurements[tooltipItem.index].temp3}  Temp4 ${measurements[tooltipItem.index].temp4}  `;
+                        label += `Mean ${Math.round(tooltipItem.yLabel * 100) / 100}`;
+                        return label;
+                    }
+                }
+            },
+            legend: {
+                display: false,
             }
         }
     });
 
 })
 
-function todayDate() {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0');
-    let yyyy = today.getFullYear();
-    today = yyyy + '-' + mm + '-' + dd;
-    return today;
-}
+
 
 
 /*
