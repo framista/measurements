@@ -15,6 +15,59 @@
 
     <div class="container">
 
+
+        <div class="updateMeasurement">
+            <form class="form">
+                <div>
+                    <label class="form--label"> ID</label>
+                    <select class="form--select"></select>
+                </div>
+                <div>
+                    <label class="form--label">Temp1</label>
+                    <input class="form--input" type="number" value=11.1>
+                </div>
+                <div>
+                    <label class="form--label">Temp2</label>
+                    <input class="form--input" type="number" value=12.1>
+                </div>
+                <div>
+                    <label class="form--label">Temp3</label>
+                    <input class="form--input" type="number" value=13.1>
+                </div>
+                <div>
+                    <label class="form--label">Temp4</label>
+                    <input class="form--input" type="number" value=14.1>
+                </div>
+                <input class="form--button" type="submit" value="UPDATE">
+            </form>
+        </div>
+
+        <div class="createMeasurement">
+            <form class="form">
+                <div>
+                    <label class="form--label">Temp1</label>
+                    <input class="form--input" type="number" value=11.1>
+                </div>
+                <div>
+                    <label class="form--label">Temp2</label>
+                    <input class="form--input" type="number" value=12.1>
+                </div>
+                <div>
+                    <label class="form--label">Temp3</label>
+                    <input class="form--input" type="number" value=13.1>
+                </div>
+                <div>
+                    <label class="form--label">Temp4</label>
+                    <input class="form--input" type="number" value=14.1>
+                </div>
+                <div>
+                    <label class="form--label"> Date</label>
+                    <input class="form--date" type="datetime-local">
+                </div>
+                <input class="form--button" type="submit" value="CREATE">
+            </form>
+        </div>
+
         <div class="generatePDF">
             GENERATE PDF
         </div>
@@ -24,27 +77,14 @@
         </div>
 
         <div class="chartBox">
-            <form>
-                <input type="date" id="date">
+            <form class="chart--form">
+                <input type="date" id="date" class="chart--form__input">
+                <input type="submit" value="Data for chart" class="chart--form__button">
+                <input type="submit" value="Create chart" class="chart--form__button">
             </form>
-            <div class="chart-container" >
-                <!-- style="position: relative; height:40vh; width:80vw" -->
+            <div class="chart-container">
                 <canvas id="chart"></canvas>
             </div>
-        </div>
-
-        <div class="createMeasurement">
-            Add measurement
-            <form>
-
-            </form>
-        </div>
-
-        <div class="updateMeasurement">
-            Add measurement
-            <form>
-
-            </form>
         </div>
 
     </div>

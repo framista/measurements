@@ -1,0 +1,125 @@
+:root {
+    box-sizing: border-box;
+    font-size: 10px;
+    --pink: #ff6385;
+}
+
+*, ::before, ::after {
+    box-sizing: inherit;
+    margin: 0;
+}
+
+body {
+    background: #ffffff;
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 35vh 5vh auto;
+    grid-template-areas: "create update" "generatePDF generateCSV" "chart chart";
+    grid-gap: 20px;
+    margin: 10px;
+}
+
+.generatePDF {
+    grid-area: generatePDF;
+}
+
+.generateCSV {
+    grid-area: generateCSV;
+}
+
+.generatePDF, .generateCSV, .chart--form__button {
+    align-self: center;
+    text-align: center;
+}
+
+.generatePDF:hover, .generateCSV:hover {
+    background-color: grey;
+    color: white;
+}
+
+.createMeasurement {
+    grid-area: create;
+}
+
+.updateMeasurement {
+    grid-area: update;
+}
+
+.createMeasurement, .updateMeasurement, .generatePDF, .generateCSV {
+    border: 2px solid var(--pink);
+    border-radius: 5px;
+    padding: 10px;
+    color: var(--pink);
+    font-size: 2rem;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form--label {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.form--input {
+    margin-top: 10px;
+    width: 35vw;
+    border-radius: 2px;
+    padding: 3px;
+}
+
+.form--select {
+    width: 10vw;
+    margin-top: 10px;
+    border-radius: 2px;
+    padding: 3px;
+}
+
+.form--date{
+    width: 30vw;
+    margin-top: 10px;
+    border-radius: 2px;
+    padding: 3px;
+}
+
+.chartBox {
+    grid-area: chart;
+    max-height: 40vh;
+    padding: 10px;
+    justify-self: center;
+}
+
+.chart--form {
+    display: flex;
+    justify-content: center;
+}
+
+.chart-container {
+    position: relative;
+    width: 80vw;
+    height: 30vh;
+    padding: 30px 10px;
+}
+
+.chart--form__input, .chart--form__button, .form--button {
+    color: var(--pink);
+    border: 2px solid var(--pink);
+    padding: 5px;
+    background-color: white;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.chart--form__button:hover, .generatePDF:hover, .generateCSV:hover, .form--button:hover {
+    background-color: grey;
+    color: white;
+    cursor: pointer;
+}
