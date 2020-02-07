@@ -26,18 +26,17 @@ class TemperatureRepository {
     }
 
     update(measurement) {
-        const { id, temp1, temp2, temp3, temp4, date } = measurement
+        const { id, temp1, temp2, temp3, temp4 } = measurement
         return this.dao.run(
             `UPDATE temperatures
             SET 
             temp1 = ?,
             temp2 = ?,
             temp3 = ?,
-            temp4 = ?,
-            date = ?
+            temp4 = ?
             WHERE id = ?
             `,
-            [temp1, temp2, temp3, temp4, date, id]
+            [temp1, temp2, temp3, temp4, id]
         )
     }
 

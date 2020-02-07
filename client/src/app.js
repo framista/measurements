@@ -57,7 +57,7 @@ idSelect.addEventListener('click', e => {
 
 createBtn.addEventListener('click', e => {
     e.preventDefault()
-    let measurement = {
+    const measurement = {
         "temp1": parseFloat(temp1CreateIpt.value),
         "temp2": parseFloat(temp2CreateIpt.value),
         "temp3": parseFloat(temp3CreateIpt.value),
@@ -65,6 +65,18 @@ createBtn.addEventListener('click', e => {
         "date": dateCreateIpt.value
     }
     api.insertMeasurement(measurement)
+})
+
+updateBtn.addEventListener('click', e => {
+    e.preventDefault()
+    const measurement = {
+        "temp1": parseFloat(temp1UpdateIpt.value),
+        "temp2": parseFloat(temp2UpdateIpt.value),
+        "temp3": parseFloat(temp3UpdateIpt.value),
+        "temp4": parseFloat(temp4UpdateIpt.value),
+    }
+    const id = idSelect.value
+    api.updateMeasurementById(id, measurement)
 })
 
 api.getTemperatures("2020-01-01").then(result => {

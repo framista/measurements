@@ -44,10 +44,9 @@ router.put('/:id', bodyParser.json(), async (req, res) => {
     const temp2 = req.body.temp2;
     const temp3 = req.body.temp3;
     const temp4 = req.body.temp4;
-    const date = req.body.date;
-    const measurement = { id, temp1, temp2, temp3, temp4, date };
+    const measurement = { id, temp1, temp2, temp3, temp4 };
     try {
-        const measurementDb = await temperatureRepo.getById(req.params.id);
+        const measurementDb = await temperatureRepo.getById(id);
         if (!measurementDb) return res.status(404).send("The measurement was not found - cannot be updated");
         let response = await temperatureRepo.update(measurement);
         res.send(response)
