@@ -28,10 +28,19 @@ const createChartBtn = document.querySelector('.chart--form__button:nth-child(3)
 dateIpt.value = todayDate()
 dateCreateIpt.value = currentTime()
 
+api.getAllId().then(result => {
+    const ids = result.data
+    ids.map( d  => {
+        const option = document.createElement("option")
+        option.setAttribute("value", d.id)
+        const node = document.createTextNode(d.id)
+        option.appendChild(node)
+        idIptOption.appendChild(option)
+    })
+})
 
 createBtn.addEventListener('click', e => {
     e.preventDefault()
-    e.stopPropagation()
     let measurement = {
         "temp1": parseFloat(temp1CreateIpt.value),
         "temp2": parseFloat(temp2CreateIpt.value),
@@ -39,7 +48,6 @@ createBtn.addEventListener('click', e => {
         "temp4": parseFloat(temp4CreateIpt.value),
         "date": dateCreateIpt.value
     }
-    console.log(measurement)
     api.insertMeasurement(measurement)
 })
 

@@ -61,6 +61,10 @@ class TemperatureRepository {
         )
     }
 
+    getAllId(){
+        return this.dao.all(`SELECT id FROM temperatures`)
+    }
+
 }
 
 module.exports = TemperatureRepository;
