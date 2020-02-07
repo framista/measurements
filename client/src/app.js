@@ -1,18 +1,53 @@
 import api from '../api'
-import {todayDate} from './dateGenerator'
-import {dataChartGenerator} from './chartGenerator'
-
-const dateIpt = document.getElementById("date")
-dateIpt.value = todayDate();
+import { todayDate, currentTime } from './dateGenerator'
+import { dataChartGenerator } from './chartGenerator'
 
 const Chart = require('chart.js');
-const ctx = document.getElementById('chart');
+
+const ctx = document.getElementById('chart')
+const createBtn = document.querySelector('.createMeasurement .form--button')
+const temp1CreateIpt = document.querySelector('div:nth-child(1) > .form--input')
+const temp2CreateIpt = document.querySelector('.createMeasurement div:nth-child(2) > .form--input')
+const temp3CreateIpt = document.querySelector('.createMeasurement div:nth-child(3) > .form--input')
+const temp4CreateIpt = document.querySelector('.createMeasurement div:nth-child(4) > .form--input')
+const dateCreateIpt = document.querySelector('.form--date')
+
+const updateBtn = document.querySelector('.updateMeasurement .form--button')
+const idIptOption = document.querySelector('.form--select')
+const temp1UpdateIpt = document.querySelector('.updateMeasurement div:nth-child(2) > .form--input')
+const temp2UpdateIpt = document.querySelector('.updateMeasurement div:nth-child(3) > .form--input')
+const temp3UpdateIpt = document.querySelector('.updateMeasurement div:nth-child(4) > .form--input')
+const temp4UpdateIpt = document.querySelector('div:nth-child(5) > .form--input')
+
+const generatePdfBtn = document.querySelector('.generatePDF')
+const generateCsvBtn = document.querySelector('.generateCSV')
+const dateIpt = document.getElementById("date")
+const dataChartBtn = document.querySelector('.chart--form__button:nth-child(2)')
+const createChartBtn = document.querySelector('.chart--form__button:nth-child(3)')
+
+dateIpt.value = todayDate()
+dateCreateIpt.value = currentTime()
+
+
+createBtn.addEventListener('click', e => {
+    e.preventDefault()
+    e.stopPropagation()
+    let measurement = {
+        "temp1": parseFloat(temp1CreateIpt.value),
+        "temp2": parseFloat(temp2CreateIpt.value),
+        "temp3": parseFloat(temp3CreateIpt.value),
+        "temp4": parseFloat(temp4CreateIpt.value),
+        "date": dateCreateIpt.value
+    }
+    console.log(measurement)
+    api.insertMeasurement(measurement)
+})
 
 api.getTemperatures("2020-01-01").then(result => {
 
     const measurements = result.data
     const dataChart = dataChartGenerator(measurements)
-  
+
     console.log(dataChart)
     const chart = new Chart(ctx, {
         type: 'line',

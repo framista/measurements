@@ -1,7 +1,7 @@
 const path = require("path");
 
 module.exports = {
-    entry: "./src/app.js",
+    entry: ['babel-polyfill', "./src/app.js"],
     output: {
         filename: "bundle.min.js",
         path: path.resolve(__dirname, "./dist/js")
