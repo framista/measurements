@@ -22,10 +22,19 @@ const temp4UpdateIpt = document.querySelector('div:nth-child(5) > .form--input')
 const generatePdfBtn = document.querySelector('.generatePDF')
 const generateCsvBtn = document.querySelector('.generateCSV')
 const dateIpt = document.getElementById("date")
-const dataChartBtn = document.querySelector('.chart--form__button:nth-child(2)')
-const createChartBtn = document.querySelector('.chart--form__button:nth-child(3)')
+const createChartBtn = document.querySelector('.chart--form__button:nth-child(2)')
+const randomChartBtn = document.querySelector('.chart--form__button:nth-child(3)')
 
 let lastOption = 1
+
+const chart = new Chart(ctx, {
+    type: 'line',
+    options: {
+        legend: {
+            display: false,
+        },
+    }
+})
 
 dateIpt.value = todayDate()
 dateCreateIpt.value = currentTime()
@@ -79,65 +88,55 @@ updateBtn.addEventListener('click', e => {
     api.updateMeasurementById(id, measurement)
 })
 
-api.getTemperatures("2020-01-01").then(result => {
-
-    const measurements = result.data
-    const dataChart = dataChartGenerator(measurements)
-
-    console.log(dataChart)
-    const chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            datasets: [{
-                backgroundColor: 'rgb(255, 255, 255, 0.1)',
-                borderColor: 'rgb(255, 99, 132)',
-                data: dataChart
-            }]
-        },
-        options: {
-            scales: {
-                xAxes: [{
-                    type: 'time',
-                    time: {
-                        displayFormats: {
-                            unit: 'hour'
-                        }
-                    }
-                }]
-            },
-            tooltips: {
-                callbacks: {
-                    label: tooltipItem => {
-                        let label = `Temp1 ${measurements[tooltipItem.index].temp1}  Temp2 ${measurements[tooltipItem.index].temp2}  Temp3 ${measurements[tooltipItem.index].temp3}  Temp4 ${measurements[tooltipItem.index].temp4}  `;
-                        label += `Mean ${Math.round(tooltipItem.yLabel * 100) / 100}`;
-                        return label;
-                    }
-                }
-            },
-            legend: {
-                display: false,
-            }
-        }
-    });
-
+createChartBtn.addEventListener('click', e => {
+    e.preventDefault()
+    const date = dateIpt.value
+    removeData(chart)
+    api.getTemperatures(date).then(result => {
+        const measurements = result.data
+        addData(chart, measurements)
+    })
 })
 
-
-
-
-/*
-api.getMeasurementById(5).then(measurement => console.log(measurement.data))
-
-const measurement = {
-    "temp1": 11.1,
-    "temp2": 12.2,
-    "temp3": 13.3,
-    "temp4": 14.4,
-    "date": "2020-11-11 12:10:10:12.000"
+function removeData(chart) {
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data.pop()
+    })
+    chart.update()
 }
-api.insertMeasurement(measurement).then(result => console.log(result.data))
 
-const date = { "date": "2020-11-11" }
-api.getTemperatures("2020-11-11").then(result => console.log(result.data))
-
-*/
+function addData(chart, measurements) {
+    const dataChart = dataChartGenerator(measurements)
+    chart.data = {
+        datasets: [{
+            backgroundColor: 'rgb(255, 255, 255, 0.1)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: dataChart
+        }]
+    }
+    chart.options = {
+        scales: {
+            xAxes: [{
+                type: 'time',
+                time: {
+                    displayFormats: {
+                        unit: 'hour'
+                    }
+                }
+            }]
+        },
+        tooltips: {
+            callbacks: {
+                label: tooltipItem => {
+                    let label = `Temp1 ${measurements[tooltipItem.index].temp1}  Temp2 ${measurements[tooltipItem.index].temp2}  Temp3 ${measurements[tooltipItem.index].temp3}  Temp4 ${measurements[tooltipItem.index].temp4}  `;
+                    label += `Mean ${Math.round(tooltipItem.yLabel * 100) / 100}`;
+                    return label;
+                }
+            }
+        },
+        legend: {
+            display: false,
+        },
+    }
+    chart.update();
+}
