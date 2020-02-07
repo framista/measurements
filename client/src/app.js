@@ -13,7 +13,7 @@ const temp4CreateIpt = document.querySelector('.createMeasurement div:nth-child(
 const dateCreateIpt = document.querySelector('.form--date')
 
 const updateBtn = document.querySelector('.updateMeasurement .form--button')
-const idIptOption = document.querySelector('.form--select')
+const idSelect = document.querySelector('.form--select')
 const temp1UpdateIpt = document.querySelector('.updateMeasurement div:nth-child(2) > .form--input')
 const temp2UpdateIpt = document.querySelector('.updateMeasurement div:nth-child(3) > .form--input')
 const temp3UpdateIpt = document.querySelector('.updateMeasurement div:nth-child(4) > .form--input')
@@ -25,18 +25,34 @@ const dateIpt = document.getElementById("date")
 const dataChartBtn = document.querySelector('.chart--form__button:nth-child(2)')
 const createChartBtn = document.querySelector('.chart--form__button:nth-child(3)')
 
+let lastOption = 1
+
 dateIpt.value = todayDate()
 dateCreateIpt.value = currentTime()
 
 api.getAllId().then(result => {
     const ids = result.data
-    ids.map( d  => {
+    ids.map(d => {
         const option = document.createElement("option")
         option.setAttribute("value", d.id)
         const node = document.createTextNode(d.id)
         option.appendChild(node)
-        idIptOption.appendChild(option)
+        idSelect.appendChild(option)
     })
+})
+
+idSelect.addEventListener('click', e => {
+    const id = e.target.value
+    if (lastOption !== id) {
+        lastOption = id
+        api.getMeasurementById(id).then(measurement => {
+            const { temp1, temp2, temp3, temp4 } = measurement.data
+            temp1UpdateIpt.value = temp1
+            temp2UpdateIpt.value = temp2
+            temp3UpdateIpt.value = temp3
+            temp4UpdateIpt.value = temp4
+        })
+    }
 })
 
 createBtn.addEventListener('click', e => {
