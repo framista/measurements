@@ -1,3 +1,5 @@
+import jsPDF from 'jspdf'
+
 import api from '../api'
 import { todayDate, currentTime } from './dateGenerator'
 import { dataChartGenerator } from './chartGenerator'
@@ -23,7 +25,6 @@ const generatePdfBtn = document.querySelector('.generatePDF')
 const generateCsvBtn = document.querySelector('.generateCSV')
 const dateIpt = document.getElementById("date")
 const createChartBtn = document.querySelector('.chart--form__button:nth-child(2)')
-const randomChartBtn = document.querySelector('.chart--form__button:nth-child(3)')
 
 let lastOption = 1
 
@@ -62,6 +63,16 @@ idSelect.addEventListener('click', e => {
             temp4UpdateIpt.value = temp4
         })
     }
+})
+
+generatePdfBtn.addEventListener('click', e => {
+    const newCanvas = document.querySelector('#chart');
+	const newCanvasImg = newCanvas.toDataURL("image/jpeg", 1.0);
+  	const doc = new jsPDF();
+	doc.setFontSize(20);
+	doc.text(15, 15, `Data for ${dateIpt.value}`);
+	doc.addImage(newCanvasImg, 'JPEG', 15, 35, 140, 75 );
+	doc.save(`report${dateIpt.value}`);
 })
 
 createBtn.addEventListener('click', e => {

@@ -103,11 +103,12 @@ body {
     justify-content: center;
 }
 
-.chart-container {
+.chart--container {
     position: relative;
     width: 80vw;
     height: 30vh;
     padding: 30px 10px;
+    background: white;
 }
 
 .chart--form__input, .chart--form__button, .form--button {
