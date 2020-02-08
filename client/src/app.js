@@ -27,6 +27,7 @@ const dateIpt = document.getElementById("date")
 const createChartBtn = document.querySelector('.chart--form__button:nth-child(2)')
 
 let lastOption = 1
+let measurements
 
 const chart = new Chart(ctx, {
     type: 'line',
@@ -75,6 +76,20 @@ generatePdfBtn.addEventListener('click', e => {
 	doc.save(`report${dateIpt.value}`);
 })
 
+generateCsvBtn.addEventListener('click', e => {
+    var csv = `Date ${dateIpt.value}\n`;
+    csv += `ID, temp1, temp2, temp3, temp4, date \n`
+    measurements.forEach(row => {
+        csv += `${row.id},${row.temp1},${row.temp2},${row.temp3},${row.temp4},${row.date}`
+        csv += "\n"
+    })
+    const hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.target = '_blank';
+    hiddenElement.download = 'data.csv';
+    hiddenElement.click();
+})
+
 createBtn.addEventListener('click', e => {
     e.preventDefault()
     const measurement = {
@@ -104,7 +119,7 @@ createChartBtn.addEventListener('click', e => {
     const date = dateIpt.value
     removeData(chart)
     api.getTemperatures(date).then(result => {
-        const measurements = result.data
+        measurements = result.data
         addData(chart, measurements)
     })
 })
