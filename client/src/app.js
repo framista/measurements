@@ -3,6 +3,7 @@ import jsPDF from 'jspdf'
 import api from '../api'
 import { todayDate, currentTime } from './dateGenerator'
 import { dataChartGenerator } from './chartGenerator'
+import { findParameters } from './parameters'
 
 const Chart = require('chart.js');
 
@@ -68,12 +69,16 @@ idSelect.addEventListener('click', e => {
 
 generatePdfBtn.addEventListener('click', e => {
     const newCanvas = document.querySelector('#chart');
-	const newCanvasImg = newCanvas.toDataURL("image/jpeg", 1.0);
-  	const doc = new jsPDF();
-	doc.setFontSize(20);
-	doc.text(15, 15, `Data for ${dateIpt.value}`);
-	doc.addImage(newCanvasImg, 'JPEG', 15, 35, 140, 75 );
-	doc.save(`report${dateIpt.value}`);
+    const newCanvasImg = newCanvas.toDataURL("image/jpeg", 1.0);
+    const doc = new jsPDF();
+    const parameters = findParameters(measurements);
+    doc.setFontSize(20);
+    doc.text(15, 15, `Data for ${dateIpt.value}`);
+    doc.text(15, 35, `Minimal temperature: ${parameters.min} on ${parameters.minDate}`);
+    doc.text(15, 50, `Maximal temperature: ${parameters.max} on ${parameters.maxDate}`);
+    doc.text(15, 65, `Mean temperature: ${parameters.mean}`);
+    doc.addImage(newCanvasImg, 'JPEG', 35, 80, 140, 75);
+    doc.save(`report${dateIpt.value}`);
 })
 
 generateCsvBtn.addEventListener('click', e => {

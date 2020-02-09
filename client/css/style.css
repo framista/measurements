@@ -17,7 +17,6 @@ body {
 .container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    /* grid-auto-rows: 60vh 5vh auto; */
     grid-template-areas: "create update" "generatePDF generateCSV" "chart chart";
     grid-gap: 20px;
     margin: 10px;
@@ -31,14 +30,10 @@ body {
     grid-area: generateCSV;
 }
 
-.generatePDF, .generateCSV, .chart--form__button {
+.generatePDF, .generateCSV, .chart--form__button, .form--button {
     align-self: center;
     text-align: center;
-}
-
-.generatePDF:hover, .generateCSV:hover {
-    background-color: grey;
-    color: white;
+    transition: 0.5s;
 }
 
 .createMeasurement {
