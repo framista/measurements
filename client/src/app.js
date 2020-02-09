@@ -68,31 +68,39 @@ idSelect.addEventListener('click', e => {
 })
 
 generatePdfBtn.addEventListener('click', e => {
-    const newCanvas = document.querySelector('#chart');
-    const newCanvasImg = newCanvas.toDataURL("image/jpeg", 1.0);
-    const doc = new jsPDF();
-    const parameters = findParameters(measurements);
-    doc.setFontSize(20);
-    doc.text(15, 15, `Data for ${dateIpt.value}`);
-    doc.text(15, 35, `Minimal temperature: ${parameters.min} on ${parameters.minDate}`);
-    doc.text(15, 50, `Maximal temperature: ${parameters.max} on ${parameters.maxDate}`);
-    doc.text(15, 65, `Mean temperature: ${parameters.mean}`);
-    doc.addImage(newCanvasImg, 'JPEG', 35, 80, 140, 75);
-    doc.save(`report${dateIpt.value}`);
+    if (!measurements) {
+        alert("Choose data for chart")
+    } else {
+        const newCanvas = document.querySelector('#chart');
+        const newCanvasImg = newCanvas.toDataURL("image/jpeg", 1.0);
+        const doc = new jsPDF();
+        const parameters = findParameters(measurements);
+        doc.setFontSize(20);
+        doc.text(15, 15, `Data for ${dateIpt.value}`);
+        doc.text(15, 35, `Minimal temperature: ${parameters.min} on ${parameters.minDate}`);
+        doc.text(15, 50, `Maximal temperature: ${parameters.max} on ${parameters.maxDate}`);
+        doc.text(15, 65, `Mean temperature: ${parameters.mean}`);
+        doc.addImage(newCanvasImg, 'JPEG', 35, 80, 140, 75);
+        doc.save(`report${dateIpt.value}`);
+    }
 })
 
 generateCsvBtn.addEventListener('click', e => {
-    var csv = `Date ${dateIpt.value}\n`;
-    csv += `ID, temp1, temp2, temp3, temp4, date \n`
-    measurements.forEach(row => {
-        csv += `${row.id},${row.temp1},${row.temp2},${row.temp3},${row.temp4},${row.date}`
-        csv += "\n"
-    })
-    const hiddenElement = document.createElement('a');
-    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
-    hiddenElement.target = '_blank';
-    hiddenElement.download = 'data.csv';
-    hiddenElement.click();
+    if (!measurements) {
+        alert("Choose data for chart")
+    } else {
+        var csv = `Date ${dateIpt.value}\n`;
+        csv += `ID, temp1, temp2, temp3, temp4, date \n`
+        measurements.forEach(row => {
+            csv += `${row.id},${row.temp1},${row.temp2},${row.temp3},${row.temp4},${row.date}`
+            csv += "\n"
+        })
+        const hiddenElement = document.createElement('a');
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+        hiddenElement.target = '_blank';
+        hiddenElement.download = 'data.csv';
+        hiddenElement.click();
+    }
 })
 
 createBtn.addEventListener('click', e => {
