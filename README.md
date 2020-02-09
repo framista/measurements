@@ -31,6 +31,7 @@ $ cd server/
 $ npm install
 # Run the server
 $ node index
+
 # Go into the client
 $ cd client/
 # Install dependencies 
